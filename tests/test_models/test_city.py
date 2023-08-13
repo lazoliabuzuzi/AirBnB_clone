@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Unittest module for the City Class."""
+"""Defines Unittest for the City Class."""
 
 import unittest
 from datetime import datetime

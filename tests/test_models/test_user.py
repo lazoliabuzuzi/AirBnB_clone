@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Unittest module for the User Class."""
+"""Defines Unittest for the User Class."""
 
 import unittest
 from datetime import datetime

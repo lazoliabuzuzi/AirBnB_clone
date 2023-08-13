@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Unittest module for the Review Class."""
+"""Defines Unittest for the Review Class."""
 
 import unittest
 from datetime import datetime
