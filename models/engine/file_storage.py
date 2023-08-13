@@ -29,7 +29,7 @@ class FileStorage:
         with open(cls.__file_path, "w", encoding="utf-8") as f:
             dic = {k: v.to_dict() for k, v in cls.__objects.items()}
             json.dump(dic, f)
-    
+
     @classmethod
     def classes(cls):
         """Returns a dictionary of valid classes and their references"""
@@ -49,7 +49,7 @@ class FileStorage:
                    "Place": Place,
                    "Review": Review}
         return classes
-    
+
     @classmethod
     def reload(cls):
         """Reloads the stored objects"""
@@ -60,7 +60,7 @@ class FileStorage:
             obj_dict = {k: cls.classes()[v["__class__"]](**v)
                         for k, v in obj_dict.items()}
             cls.__objects = obj_dict
-    
+
     @classmethod
     def attributes(cls, classname):
         """Returns the valid attributes and their types for classname"""
