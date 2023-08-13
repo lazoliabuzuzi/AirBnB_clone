@@ -12,22 +12,26 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
-        """returns the dictionary __objects"""
-        return FileStorage.__objects
+    @classmethod
+    def all(cls):
+        """Returns the dictionary __objects"""
+        return cls.__objects
 
-    def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+    @classmethod
+    def new(cls, obj):
+        """Sets in __objects the obj with key <obj class name>.id"""
         key = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        cls.__objects[key] = obj
 
-    def save(self):
-        """ serializes __objects to the JSON file (path: __file_path)"""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            dic = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+    @classmethod
+    def save(cls):
+        """Serializes __objects to the JSON file (path: __file_path)"""
+        with open(cls.__file_path, "w", encoding="utf-8") as f:
+            dic = {k: v.to_dict() for k, v in cls.__objects.items()}
             json.dump(dic, f)
-
-    def classes(self):
+    
+    @classmethod
+    def classes(cls):
         """Returns a dictionary of valid classes and their references"""
         from models.base_model import BaseModel
         from models.user import User
@@ -45,19 +49,20 @@ class FileStorage:
                    "Place": Place,
                    "Review": Review}
         return classes
-
-    def reload(self):
+    
+    @classmethod
+    def reload(cls):
         """Reloads the stored objects"""
-        if not os.path.isfile(FileStorage.__file_path):
+        if not os.path.isfile(cls.__file_path):
             return
-        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
+        with open(cls.__file_path, "r", encoding="utf-8") as f:
             obj_dict = json.load(f)
-            obj_dict = {k: self.classes()[v["__class__"]](**v)
+            obj_dict = {k: cls.classes()[v["__class__"]](**v)
                         for k, v in obj_dict.items()}
-            # TODO: should this overwrite or insert?
-            FileStorage.__objects = obj_dict
-
-    def attributes(self):
+            cls.__objects = obj_dict
+    
+    @classmethod
+    def attributes(cls, classname):
         """Returns the valid attributes and their types for classname"""
         attributes = {
             "BaseModel":
